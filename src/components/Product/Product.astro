@@ -1,0 +1,168 @@
+---
+import DetailsSection from './ProductSections/DetailsSection.astro';
+import FeaturesSection from './ProductSections/FeaturesSection.astro';
+import MediaSection from './ProductSections/MediaSection.astro';
+import PresentationSection from './ProductSections/PresentationSection.astro';
+import SpecsSection from './ProductSections/SpecsSection.astro';
+
+// Props for the component
+export interface Props {
+    imageUrl: string;
+    title: string;
+    description: string;
+    features: string[];
+    specs: string[];
+    manual: string;
+    firmware: string;
+    media: {
+        video: string;
+    };
+}
+
+// Default props
+const { imageUrl, description, features, specs, manual, firmware, media } = Astro.props as Props;
+---
+
+<section class="product-section">
+    <PresentationSection imageUrl={imageUrl} />
+    <DetailsSection description={description} />
+    <FeaturesSection features={features} />
+
+    <section class="product-tech">
+        <SpecsSection specs={specs} />
+
+        <div class="product-downloadables">
+            <div>
+                <a
+                    href={firmware}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="downloadable-link"
+                >
+                    <h2>Firmware</h2>
+                    <span>Download Firmware</span>
+                </a>
+            </div>
+            <div>
+                <a
+                    href={manual}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="downloadable-link"
+                >
+                    <h2>Manual</h2>
+                    <span>Download Manual</span>
+                </a>
+            </div>
+        </div>
+    </section>
+</section>
+<MediaSection videoUrl={media.video} />
+
+<style>
+    .product-section {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .product-presentation {
+        display: flex;
+        gap: 2rem;
+        margin-bottom: 2rem;
+        img {
+            width: 100%;
+            height: auto;
+            max-width: 300px;
+        }
+    }
+
+    .product-tech {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        border-bottom: 1px solid black;
+        background-color: var(--background-color);
+    }
+    .product-specs ul {
+        list-style-type: disc;
+        padding-left: 1.5rem;
+        text-align: left;
+    }
+
+    .product-downloadables {
+        display: flex;
+        justify-content: center;
+        gap: 5em;
+        align-items: center;
+    }
+
+    .product-downloadables a {
+        text-decoration: none;
+        position: relative;
+        display: inline-block;
+    }
+
+    .product-downloadables a::after {
+        content: '';
+        position: absolute;
+        width: 90%; /* Make the underline wider than the text */
+        height: 3px; /* Thickness of the underline */
+        bottom: -5px; /* Position the underline slightly below the text */
+        left: var(--underline-left, 50%); /* Default position (centered) */
+        background-color: transparent; /* Hidden by default */
+        transform: translateX(-50%); /* Center the underline */
+        transition:
+            background-color 0.2s ease,
+            left 0.1s ease;
+    }
+
+    .product-downloadables a:hover::after {
+        background-color: var(--primary-color); /* Show underline on hover */
+    }
+
+    .product-media iframe {
+        margin-top: 1rem;
+        width: 100%;
+        max-width: 560px;
+        height: 315px;
+    }
+</style>
+
+<script>
+    // Function to generate a random color
+    function getRandomColor() {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    // Add event listeners to downloadable links
+    document.addEventListener('DOMContentLoaded', () => {
+        const downloadableLinks = document.querySelectorAll('.downloadable-link');
+
+        downloadableLinks.forEach((link) => {
+            // Generate a unique color for each hover instance
+            link.addEventListener('mouseenter', () => {
+                const randomColor = getRandomColor();
+                (link as HTMLElement).style.setProperty('--primary-color', randomColor); // Set the random color
+            });
+
+            // Track mouse movement and update underline position
+            link.addEventListener('mousemove', (event) => {
+                const rect = link.getBoundingClientRect();
+                const mouseX = event.clientX - rect.left; // Mouse X relative to the link
+
+                // Update the custom property for the underline position
+                link.style.setProperty('--underline-left', `${mouseX}px`);
+            });
+
+            // Reset underline position when the mouse leaves
+            link.addEventListener('mouseleave', () => {
+                link.style.setProperty('--underline-left', '50%'); // Reset to center
+            });
+        });
+    });
+</script>

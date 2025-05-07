@@ -1,0 +1,72 @@
+---
+export interface Props {
+    features: string[];
+    title?: string; // Optional title for the section
+}
+
+// Default props
+const { features, title = '- features -' } = Astro.props as Props;
+---
+
+<div class="features-section">
+    <h2 class="features-title">{title}</h2>
+    <ul class="features-list">
+        {features.map((feature) => <li class="feature-item">{feature}</li>)}
+    </ul>
+</div>
+
+<style>
+    .features-section {
+        margin-top: 2rem;
+        width: 100%;
+    }
+
+    .features-title {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .features-list {
+        width: 100vw;
+        text-align: center;
+        background-color: var(--background-color);
+
+        li {
+            display: flex;
+            padding: 0.5rem 1rem;
+            font-size: 1.5rem;
+            border-bottom: solid 2px black;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        li:first-child {
+            border-top: solid 2px black;
+        }
+    }
+
+    .feature-item {
+        font-size: 1rem;
+        color: #333;
+        transition: color 0.5s ease;
+    }
+
+    .feature-item:hover {
+        animation: colorOscillate 10s infinite alternate;
+        font-weight: 400;
+    }
+
+    @keyframes colorOscillate {
+        1% {
+            color: #ea6a1ae5;
+        }
+        50% {
+            color: #002f6c; /* Second color */
+        }
+        100% {
+            color: #ea6a1ae5; /* Back to first color */
+        }
+    }
+</style>

@@ -1,11 +1,22 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import Animation from '../components/Animation.astro';
+import Product from '../components/Product/Product.astro';
+import zeruaNahasi from '../data/zerua-nahasi';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout>
-	<Welcome />
+    <Animation />
+    <Product
+        imageUrl="/src/assets/zerua_nahasi.png"
+        title="Sample Product"
+        description={zeruaNahasi.description}
+        features={zeruaNahasi.features}
+        specs={zeruaNahasi.specs}
+        manual={zeruaNahasi.manual}
+        firmware={zeruaNahasi.firmware}
+        media={zeruaNahasi.media}
+    />
 </Layout>
+<style></style>

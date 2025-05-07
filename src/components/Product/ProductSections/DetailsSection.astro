@@ -1,0 +1,42 @@
+---
+export interface Props {
+    description: string;
+}
+
+const { description } = Astro.props as Props;
+
+// Split the description into blocks (e.g., by sentences or paragraphs)
+const descriptionBlocks = description.split('. ').map((block, index) => `${block.trim()}.`);
+---
+
+<section class="product-details">
+    {
+        descriptionBlocks.map((block, index) => (
+            <p
+                class="product-description"
+                style={`margin-left: ${index * -20}px; margin-top: ${index * 1}px;`}
+            >
+                {block}
+            </p>
+        ))
+    }
+</section>
+
+<style>
+    .product-details {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 2rem;
+        position: relative;
+    }
+
+    .product-description {
+        font-size: 1.5rem;
+        color: #1e1e1e;
+        text-align: justify;
+        line-height: 1.6;
+        max-width: 1000px;
+    }
+</style>

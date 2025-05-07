@@ -1,0 +1,36 @@
+---
+export interface Props {
+    imageUrl: string;
+}
+
+const { imageUrl } = Astro.props as Props;
+---
+
+<section class="product-presentation">
+    <img src={'/src/assets/zeruanahasi_title.png'} alt="Product Title" />
+    <div class="product-image">
+        <img src={imageUrl} alt="Product Image" />
+    </div>
+</section>
+
+<style>
+    .product-presentation {
+        height: 100vh;
+        display: flex;
+        gap: 2rem;
+        margin-bottom: 2rem;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .product-presentation img {
+        width: 100%;
+        height: auto;
+        max-width: 400px;
+    }
+
+    .product-image img {
+        max-width: 600px;
+        height: auto;
+    }
+</style>

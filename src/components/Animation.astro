@@ -1,0 +1,75 @@
+---
+import background from '../assets/background.svg';
+import MarqueeComponent from './React/Marquee';
+---
+
+<div id="container">
+    <main>
+        <!-- <section class="noise-bg" id="hero">
+            <div class="marquee" id="marquee">
+                <MarqueeComponent client:only="react" />
+            </div>
+        </section> -->
+    </main>
+</div>
+
+<script>
+    import { createDraggable, utils } from 'animejs';
+    let hasScrolled = false;
+
+    const handleScroll = () => {
+        if (!hasScrolled) {
+            const heroSection = document.getElementById('hero');
+            if (heroSection) {
+                heroSection.style.transition = 'filter 3s ease-in-out'; // Smooth transition
+                heroSection.style.filter = 'contrast(95%) brightness(3000%)';
+            }
+            hasScrolled = true; // Ensure the animation only triggers once
+            window.removeEventListener('scroll', handleScroll); // Remove the event listener
+        }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    createDraggable('.marquee', {
+        x: false,
+    });
+</script>
+
+<style>
+    p {
+        position: fixed;
+        top: 5vh;
+        right: 0;
+        transform: translate(-50%, -50%);
+        font-size: 1rem;
+        color: #ffffff;
+        z-index: 99999;
+    }
+
+    main {
+        overflow-y: scroll;
+    }
+
+    .marquee {
+        position: fixed;
+        top: 30vh;
+        left: 0;
+        width: 100vw;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1;
+    }
+
+    .noise-bg {
+        position: fixed;
+        top: 0;
+        width: 100vw;
+        height: 200vh;
+        filter: contrast(150%) brightness(1000%);
+        background:
+            linear-gradient(180deg, rgb(0, 0, 255), rgba(255, 0, 0, 0)), url(/src/assets/noise.svg);
+    }
+</style>

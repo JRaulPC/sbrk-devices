@@ -1,0 +1,62 @@
+---
+
+---
+
+<header id="header">
+    <nav>
+        <ul>
+            <li>
+                <a href="/"> <img src="/src/assets/sbrk_logo.png" alt="Logo" /></a>
+            </li>
+            <li>
+                <a target="_blank" href="https://www.bcnreverbera.com/">barcelona reverbera</a>
+            </li>
+        </ul>
+    </nav>
+
+    <script>
+        let lastScrollY = window.scrollY;
+        const header = document.getElementById('header');
+
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+
+            if (currentScrollY > lastScrollY) {
+                // Scrolling down
+                header!.style.transform = 'translateY(-120%)'; // Hide header
+            } else {
+                // Scrolling up
+                header!.style.transform = 'translateY(0)'; // Show header
+            }
+
+            lastScrollY = currentScrollY;
+        });
+    </script>
+
+    <style>
+        header {
+            position: fixed;
+
+            z-index: 1000;
+            background-color: var(--background-color);
+            width: 100%;
+            transition: transform 0.3s ease;
+
+            border-bottom: #6b6b6b solid 2px;
+        }
+        img {
+            max-width: 150px;
+            padding: 0.2em;
+        }
+
+        ul {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .text {
+            color: #0000ff;
+        }
+    </style>
+</header>
