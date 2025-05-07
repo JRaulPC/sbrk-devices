@@ -39,8 +39,8 @@ const { imageUrl, description, features, specs, manual, firmware, media } = Astr
                     rel="noopener noreferrer"
                     class="downloadable-link"
                 >
-                    <h2>Firmware</h2>
-                    <span>Download Firmware</span>
+                    <h2>firmware</h2>
+                    <span>download firmware</span>
                 </a>
             </div>
             <div>
@@ -50,8 +50,8 @@ const { imageUrl, description, features, specs, manual, firmware, media } = Astr
                     rel="noopener noreferrer"
                     class="downloadable-link"
                 >
-                    <h2>Manual</h2>
-                    <span>Download Manual</span>
+                    <h2>manual</h2>
+                    <span>download manual</span>
                 </a>
             </div>
         </div>
@@ -106,7 +106,7 @@ const { imageUrl, description, features, specs, manual, firmware, media } = Astr
         content: '';
         position: absolute;
         width: 90%; /* Make the underline wider than the text */
-        height: 3px; /* Thickness of the underline */
+        height: 2px; /* Thickness of the underline */
         bottom: -5px; /* Position the underline slightly below the text */
         left: var(--underline-left, 50%); /* Default position (centered) */
         background-color: transparent; /* Hidden by default */
@@ -141,17 +141,17 @@ const { imageUrl, description, features, specs, manual, firmware, media } = Astr
 
     // Add event listeners to downloadable links
     document.addEventListener('DOMContentLoaded', () => {
-        const downloadableLinks = document.querySelectorAll('.downloadable-link');
+        const downloadableLinks = document.querySelectorAll<HTMLElement>('.downloadable-link');
 
-        downloadableLinks.forEach((link) => {
+        downloadableLinks.forEach((link: HTMLElement) => {
             // Generate a unique color for each hover instance
             link.addEventListener('mouseenter', () => {
                 const randomColor = getRandomColor();
-                (link as HTMLElement).style.setProperty('--primary-color', randomColor); // Set the random color
+                link.style.setProperty('--primary-color', randomColor); // Set the random color
             });
 
             // Track mouse movement and update underline position
-            link.addEventListener('mousemove', (event) => {
+            link.addEventListener('mousemove', (event: MouseEvent) => {
                 const rect = link.getBoundingClientRect();
                 const mouseX = event.clientX - rect.left; // Mouse X relative to the link
 
