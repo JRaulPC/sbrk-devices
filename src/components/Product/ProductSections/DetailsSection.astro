@@ -4,25 +4,42 @@ export interface Props {
 }
 
 const { description } = Astro.props as Props;
-
-// Split the description into blocks (e.g., by sentences or paragraphs)
-const descriptionBlocks = description.split('. ').map((block, index) => `${block.trim()}.`);
 ---
 
 <section class="product-details">
-    {
-        descriptionBlocks.map((block, index) => (
-            <p
-                class="product-description"
-                style={`margin-left: ${index * -20}px; margin-top: ${index * 1}px;`}
-            >
-                {block}
-            </p>
-        ))
-    }
+    <p class="product-description">
+        zerua nahasi is a
+        <mark class="highlight highlight-first"
+            >polyphonic granular synthesizer for the eurorack modular format</mark
+        >, with a wide range of granulation possibilities. it features 4 stereo granular engines
+        that can be used independently or in combination, opening a whole palette of possibilities.
+        samples can be loaded from an SD card, or recorded via the stereo audio input. each
+        granulation engine can use the same or different samples as sources for granulation. a live
+        mode is also available, where the device works as a granular delay.
+        <mark class="highlight highlight-second">
+            zerua nahasi aims to work as a granulation
+            <span class="laboratory">
+                <span class="tech-font">l</span>
+                <span class="vt-font">a</span>
+                <span class="tech-font">b</span>
+                <span class="vt-font">o</span>
+                <span class="tech-font">r</span>
+                <span class="vt-font">a</span>
+                <span class="tech-font">t</span>
+                <span class="vt-font">o</span>
+                <span class="tech-font">r</span>
+                <span class="vt-font">y</span>
+            </span>.
+        </mark>Furthermore, this device also includes a stereo convolution reverb, with some
+        built-in impulse responses with barcelona's most iconic spaces, and the possibility to load
+        custom IRs from the SD card.
+    </p>
 </section>
 
 <style>
+    /* Import fonts with preconnect for better performance */
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap');
+
     .product-details {
         display: flex;
         flex-direction: column;
@@ -36,7 +53,223 @@ const descriptionBlocks = description.split('. ').map((block, index) => `${block
         font-size: 1.5rem;
         color: #1e1e1e;
         text-align: justify;
-        line-height: 1.6;
         max-width: 1000px;
+        line-height: 1.6;
+    }
+
+    /* Base highlight styles */
+    .highlight {
+        background-size: 0 100%;
+        background-repeat: no-repeat;
+        background-color: transparent;
+        padding: 0 4px;
+        font-size: 1.8rem;
+    }
+
+    /* First highlight styles */
+    .highlight-first {
+        background-image: linear-gradient(to left, rgb(161, 255, 66), transparent);
+    }
+
+    /* Second highlight styles */
+    .highlight-second {
+        background-image: linear-gradient(to right, rgb(161, 255, 66), transparent);
+    }
+
+    /* Laboratory text styling */
+    .laboratory {
+        text-align: center;
+        display: inline-block;
+    }
+
+    .tech-font {
+        font-family: 'Share Tech Mono', monospace;
+        display: inline-block;
+        margin-right: -2px;
+        animation: pulse 2s infinite alternate;
+        animation-delay: calc(var(--index, 0) * 0.1s);
+    }
+
+    .vt-font {
+        font-family: 'VT323', monospace;
+        display: inline-block;
+        margin-right: -2px;
+        animation: pulse 2s infinite alternate-reverse;
+        animation-delay: calc(var(--index, 0) * 0.1s);
+    }
+
+    /* Animation for the laboratory text */
+    @keyframes pulse {
+        0% {
+            transform: translateY(0);
+            opacity: 0.8;
+        }
+        100% {
+            transform: translateY(-2px);
+            opacity: 1;
+        }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .product-description {
+            font-size: 1.2rem;
+        }
+
+        .highlight {
+            font-size: 1.4rem;
+        }
+    }
+
+    @keyframes mark-it {
+        0% {
+            background-size: 0 100%;
+        }
+        100% {
+            background-size: 100% 100%;
+        }
+    }
+
+    @keyframes mark-it2 {
+        0% {
+            background-size: 100% 0;
+        }
+        100% {
+            background-size: 100% 100%;
+        }
+    }
+
+    .glitch {
+        animation: glitch 0.5s steps(2, end) infinite;
+    }
+
+    @keyframes glitch {
+        0% {
+            transform: translate(0, 0);
+        }
+        25% {
+            transform: translate(-2px, 2px);
+        }
+        50% {
+            transform: translate(2px, -2px);
+        }
+        75% {
+            transform: translate(-1px, 1px);
+        }
+        100% {
+            transform: translate(0, 0);
+        }
     }
 </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const laboratoryLetters = document.querySelectorAll('.laboratory span');
+        const glyphs = ['@', '#', '⍱', '%', '&', '*', '!', '✦'];
+        let glyphTimer: number;
+
+        const randomizeGlyphs = () => {
+            // Reset all letters to their original state
+            laboratoryLetters.forEach((letter) => {
+                letter.classList.remove('glyph');
+                if (letter instanceof HTMLElement) {
+                    letter.textContent = letter.dataset.original || '';
+                }
+            });
+
+            // Randomly select letters to replace with glyphs
+            const indices = Array.from({ length: laboratoryLetters.length }, (_, i) => i);
+            const shuffledIndices = indices.sort(() => Math.random() - 0.5);
+
+            for (let i = 0; i < shuffledIndices.length; i += 2) {
+                const index = shuffledIndices[i];
+                const letter = laboratoryLetters[index];
+                const glyph = glyphs[Math.floor(Math.random() * glyphs.length)];
+
+                if (letter) {
+                    letter.classList.add('glyph');
+                    letter.textContent = glyph;
+                }
+            }
+        };
+
+        // Store the original letters in a data attribute
+        laboratoryLetters.forEach((letter) => {
+            if (letter instanceof HTMLElement) {
+                letter.dataset.original = letter.textContent || '';
+            }
+
+            // Add hover event for glitch effect
+            letter.addEventListener('mouseenter', () => {
+                // Reset all letters to their original state
+                laboratoryLetters.forEach((l) => {
+                    l.classList.remove('glyph', 'glitch');
+
+                    l.textContent = l.dataset.original;
+                });
+
+                // Add glitch effect to the hovered letter
+                letter.classList.add('glitch');
+
+                // Reset the glyph randomization timer
+                clearInterval(glyphTimer);
+                glyphTimer = setInterval(randomizeGlyphs, 10000);
+            });
+
+            // Remove glitch effect on mouse leave
+            letter.addEventListener('mouseleave', () => {
+                letter.classList.remove('glitch');
+            });
+        });
+
+        // Randomize glyphs every 10 seconds
+        glyphTimer = setInterval(randomizeGlyphs, 8000) as unknown as number;
+    });
+
+    // Add delay indices to laboratory letters
+    document.addEventListener('DOMContentLoaded', () => {
+        const techFonts = document.querySelectorAll<HTMLElement>('.tech-font');
+        const vtFonts = document.querySelectorAll<HTMLElement>('.vt-font');
+
+        [...techFonts, ...vtFonts].forEach((element, index) => {
+            element.style.setProperty('--index', index.toString());
+        });
+
+        const animateElement = (element: Element, animationStyle: string): void => {
+            if (element instanceof HTMLElement) {
+                element.style.animation = animationStyle;
+            }
+        };
+
+        const observerFirst = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        animateElement(entry.target, 'mark-it 1.2s linear forwards');
+                        observerFirst.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.5 },
+        );
+
+        const observerSecond = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        animateElement(entry.target, 'mark-it2 1.5s linear forwards 0.3s');
+                        observerSecond.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 1 },
+        );
+
+        // Observe the highlights
+        const firstHighlight = document.querySelector('.highlight-first');
+        const secondHighlight = document.querySelector('.highlight-second');
+
+        if (firstHighlight) observerFirst.observe(firstHighlight);
+        if (secondHighlight) observerSecond.observe(secondHighlight);
+    });
+</script>

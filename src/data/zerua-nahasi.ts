@@ -1,7 +1,6 @@
 const zeruaNahasi = {
     name: 'Zerua Nahasi',
-    description:
-        'zerua nahasi is a polyphonic granular synthesizer for the eurorack modular format, with a wide range of granulation possibilities. it features 4 stereo granular engines that can be used independently or in combination, opening a whole palette of possibilities. samples can be loaded from an SD card, or recorded via the stereo audio input. each granulation engine can use the same or different samples as sources for granulation. a live mode is also available, where the device works as a granular delay. zerua nahasi aims to work as a granulation laboratory. Furthermore, this device also includes a stereo convolution reverb, with some built-in impulse responses with barcelona’s most iconic spaces, and the possibility to load custom IRs from the SD card.',
+    description: '###LA DESCRIPCION ESTA SIENDO ESCRITA DIRECTAMENTE EN EL COMPONENTE####',
     features: [
         '4 stereo granular engines - each slot can hold over 20 seconds of audio.',
         'the 4 engines can be synchronized and combined in multiple ways.',
