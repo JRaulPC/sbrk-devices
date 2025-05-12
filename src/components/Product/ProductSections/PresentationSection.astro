@@ -58,7 +58,7 @@ const { imageUrl } = Astro.props as Props;
         position: absolute;
         bottom: -38px;
 
-        background-color: rgb(175, 233, 16);
+        background-color: var(--highlight-color);
         padding: 0.5rem 1rem;
 
         font-size: 1rem;
@@ -77,10 +77,10 @@ const { imageUrl } = Astro.props as Props;
             border-color: transparent;
         }
         50% {
-            border-color: rgb(255, 162, 0);
+            border-color: var(--primary-color);
         }
         100% {
-            border-color: white;
+            border-color: var(--secondary-color);
         }
     }
 
