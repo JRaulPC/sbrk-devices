@@ -26,6 +26,14 @@ const { imageUrl } = Astro.props as Props;
         margin-bottom: 2rem;
         justify-content: center;
         align-items: center;
+        visibility: hidden; /* Hide the section initially */
+        opacity: 0; /* Ensure it's not visible */
+        transition: opacity 1s ease-in; /* Smooth fade-in effect */
+    }
+
+    .product-presentation.loaded {
+        visibility: visible; /* Show the section */
+        opacity: 1; /* Fully visible */
     }
 
     .product-presentation img {
@@ -101,6 +109,12 @@ const { imageUrl } = Astro.props as Props;
 </style>
 
 <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const presentationSection = document.querySelector('.product-presentation');
+        if (presentationSection) {
+            presentationSection.classList.add('loaded'); // Add the "loaded" class once the DOM is ready
+        }
+    });
     document.addEventListener('DOMContentLoaded', () => {
         const zoomContainer = document.querySelector('.zoom-container');
         const zoomImage = document.querySelector('.zoom-image') as HTMLElement;
