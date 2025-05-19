@@ -27,7 +27,7 @@ const { imageUrl, description, features, specs, manual, firmware, media } = Astr
     <PresentationSection imageUrl={imageUrl} />
     <DetailsSection description={description} />
     <FeaturesSection features={features} />
-
+    <MediaSection videoUrl={media.video} />
     <section class="product-tech">
         <SpecsSection specs={specs} />
 
@@ -57,7 +57,6 @@ const { imageUrl, description, features, specs, manual, firmware, media } = Astr
         </div>
     </section>
 </section>
-<MediaSection videoUrl={media.video} />
 
 <style>
     .product-section {

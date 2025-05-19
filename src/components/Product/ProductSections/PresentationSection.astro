@@ -22,18 +22,18 @@ const { imageUrl } = Astro.props as Props;
     .product-presentation {
         height: 100vh;
         display: flex;
-        gap: 2rem;
+        gap: 4rem;
         margin-bottom: 2rem;
         justify-content: center;
         align-items: center;
-        visibility: hidden; /* Hide the section initially */
-        opacity: 0; /* Ensure it's not visible */
-        transition: opacity 1s ease-in; /* Smooth fade-in effect */
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 1s ease-in;
     }
 
     .product-presentation.loaded {
-        visibility: visible; /* Show the section */
-        opacity: 1; /* Fully visible */
+        visibility: visible;
+        opacity: 1;
     }
 
     .product-presentation img {
